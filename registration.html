@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+    
+</head>
+<body class="registration-body">
+    <div class="container-register">
+        <div class="left">
+            <img src="images/registration image.jpg" alt="">
+        </div>
+        <div class="right">
+            <form action="" class="registration-form">
+                <h2 class="head">STUDENT REGISTRATION FORM</h2>
+                <!-- <hr> -->
+                
+                <div class="element ele">
+                    <label for="name"><i class="fas fa-user icon"></i> Full Name</label>
+                    <input type="text" name = "name" placeholder="Your Name" required id = "name">
+                </div>
+        
+                <div class="element ele">
+                    <label for="uid"><i class="fas fa-id-badge icon"></i> UID</label>
+                    <input type="text" name = "uid" placeholder="Your UID" required id = "uid">
+                </div>
+        
+                <div class="element ele">
+                    <label for="email"><i class="fas fa-envelope icon"></i> Email ID</label>
+                    <input type="email" name = "email" placeholder="Your email id" required id = "email">
+                </div>
+        
+                <div class="element ele">
+                    <label for="mobile"><i class="fas fa-phone-square-alt icon"></i> Mobile No.</label>
+                    <input type="tel" name="mobile" placeholder="Your mobile no." required id = "mobile">
+                </div>
+        
+                <div class="element ele">
+                    <label for="pwd"><i class="fas fa-lock icon"></i> Password</label>
+                    <input type="password" name="pwd" id="pwd" placeholder="Your Password" required id = "pwd">
+                </div>
+        
+                <div class="element ele">
+                    <label for="confirm-pwd"><i class="fas fa-lock icon"></i> Confirm Password</label>
+                    <input type="password" name="confirm-pwd" id="confirm-pwd" placeholder="Confirm password" required>
+                </div>
+        
+                <button class="btn btn-register" onclick="submitStudentData(event)">Submit</button>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

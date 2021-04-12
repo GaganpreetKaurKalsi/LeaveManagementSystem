@@ -1,0 +1,615 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Roboto+Condensed&family=Varela+Round&display=swap');
+
+*{
+    padding : 0;
+    margin : 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Merriweather', serif;
+}
+
+::selection{
+    outline : none;
+}
+
+.background img{
+    position:fixed;
+    height: 100%;
+    width: 100%;
+    z-index : -1;
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
+}
+.layer{
+    height : 100%;
+    position : fixed;
+    width : 100%;
+    background-color: rgba(0, 0, 0, 0.322);
+    z-index : 0;
+}
+
+.container{
+    position:absolute;
+    height : 100%;
+    width : 100%;
+}
+.form{
+    max-width : 500px;
+    margin : auto;
+    position : relative;
+    z-index : 1;
+    font-family: 'Merriweather', serif;
+    color : white;
+    text-align : center;
+    vertical-align: middle;
+    top : 8%;
+}
+.form img{
+    text-align: center;
+    display: block;
+    margin : auto;
+}
+
+.item{
+    margin : 20px 0px;
+}
+
+.form .desc{
+    max-width : 300px;
+    text-align: center;
+    margin : auto;
+    font-weight : 200;
+    
+}
+.block{
+    display: block;
+    margin : auto;
+}
+.input{
+    margin : 10px auto;
+    padding : 10px 15px;
+    max-width: 300px;
+    width : 90%;
+    /* border : solid 2px rgba(0, 0, 0, 0.911); */
+    border : none;
+    border-radius : 100px;
+    background-color: rgba(255, 255, 255, 0.877);
+}
+
+::placeholder{
+    color : rgba(110, 108, 108, 0.856);
+    font-weight: 400;
+}
+
+.input:focus{
+    outline : none;
+    background-color: white;
+    
+}
+.btn{
+    margin : 12px auto;
+    padding : 10px 15px;
+    max-width: 300px;
+    width : 90%;
+    border-radius : 100px;
+    background-color: rgb(219, 16, 16);
+    color : white;
+    font-size : 16px;
+    border : none;
+    cursor: pointer;
+}
+.btn:hover{
+    background-color: rgba(207, 7, 7, 0.897);
+}
+
+.forgotpwd a{
+    text-decoration: none;
+    color : white;
+}
+
+.admin-btn a, .student-btn a{
+    text-decoration: none;
+    color : rgb(223, 13, 13);
+    border : solid 2px white;
+    padding : 10px;
+    font-size : 16px;
+    background-color: rgba(255, 255, 255, 0.205);
+    font-weight : bold;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 1px #000;
+    cursor: pointer;
+}
+.admin-btn a:hover, .student-btn a:hover{
+    background-color: rgba(255, 255, 255, 0.651);
+}
+.admin-btn, .student-btn{
+    margin : 30px auto;
+    margin-bottom : 40px;
+    display : block;
+}
+.student-btn, .admin-fields{
+    visibility: collapse;
+    display : none;
+}
+#leave-container{
+    padding : 0 40px;
+}
+
+#leave-container .leave-item{
+    max-width : 800px;
+    width : 95%;
+    margin : inherit auto;
+}
+
+
+/* *****************  Main Page  ***************** */
+
+.lms-logo{
+    height : 100px;
+    weight : auto;
+}
+
+.header{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+ul{
+    position: relative;
+}
+
+ul li{
+    display: inline-block;
+}
+
+.title ,.user{
+    position:relative;
+    top : -44px;
+}
+
+.user{
+    float : right;
+    top : 44px;
+    right : 20px;
+    font-family: 'Merriweather', serif;
+    font-weight : bolder;
+    color : rgb(104, 104, 104);
+}
+
+.title{
+    font-size : 20px;
+    font-family: 'Merriweather', serif;
+    color : rgb(226, 21, 21);
+    /* font-style: italic; */
+    font-weight: bolder;
+    margin-left : 5px;
+}
+.title span{
+    font-size : 25px;
+}
+.user i{
+    font-size : 20px;
+    margin-right : 5px;
+}
+.heading{
+    text-align: center;
+    font-size : 25px;
+    color : white;
+    background-color : #525252;
+    margin : 30px 10px;
+    padding : 20px; 
+    margin-bottom : 0;
+}
+.form-leave label{
+    margin : 10px 30px;
+    /* width : 50%; */
+}
+.form-leave select, .form-leave input{
+    padding : 5px 15px;
+    font-size: 14px;
+    width : 300px;
+    height : 40px;
+}
+.form-leave textarea{
+    padding : 5px 15px;
+    width : 300px;
+    font-size: 14px;
+}
+.form-leave{
+    text-align: center;
+    color : black;
+    max-width : 1000px;
+    width : 90%;
+    margin-top : 80px;
+}
+.element{
+    margin : 20px auto;
+    width : 60%;
+    /* text-align: left; */
+    display:flex;
+    justify-content: space-between;
+    padding : 0;
+}
+.leave-btn{
+    width : 200px;
+    border-radius: 10px;
+    font-size : 18px;
+}
+.history-btn{
+    background-color: #F97316;
+    width : 150px;
+    border-radius: 0;
+    float : right;
+    top : 0;
+    margin-right : 10px;
+    /* font-size : 18px; */
+    
+}
+.history-btn:hover{
+    background-color: #EA580C;
+}
+
+
+/* registration Page */
+
+.registration-body{
+    background-color:#f0f0f0ef ;
+    background-color: #e04949;
+    /* background-color: #10B981; */
+    background-color: rgba(206, 206, 206, 0.589);
+    /* background-color: rgb(255, 235, 235); */
+}
+.registration-form{
+    background-color: white;
+    color : black;
+    vertical-align: middle;
+    padding : 40px;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    height : 100%;
+    text-align: center;
+    
+}
+.head{
+    margin-bottom : 10px;
+    font-size : 20px;
+    margin-bottom : 40px;
+    /* text-align : left; */
+    color : #DC2626;
+}
+hr{
+    width : 5vw;
+    margin : auto;
+    border : solid #DC2626 2px;
+    border-radius: 40px;
+    background-color: #DC2626;
+    margin-bottom : 40px;
+
+}
+
+.registration-form input{
+    padding : 5px 15px;
+    font-size: 14px;
+    max-width : 300px;
+    height : 40px;
+    width : 60%;
+    border-width: 1px;
+}
+
+.registration-form input:focus{
+    outline : none;
+    border: solid #3eb2e7 2px;
+
+}
+
+.ele{
+    width : 90%;
+}
+
+.registration-form label{
+    padding: 10px 0;
+    text-align: left;
+}
+
+.container-register{
+    width : 90%;
+    margin : auto;
+    height : 100%;
+    margin-top : 7.5vh;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 12px 12px;
+    margin-bottom : 7.5vh;
+}
+.left, .right{
+    width : 50%;
+    display: inline-block;
+    margin : 0;
+    padding : 0;
+    float : left;
+}
+.left img{
+    width : 100%;
+    height : 100%;
+}
+.btn-register{
+    border-radius: 0;
+    align-items: center;
+    align-content: center;
+    width : 80%;
+    max-width : 200px;
+    margin : auto;
+    margin-top : 10px;
+    text-align: center;
+    padding : 12px;
+}
+.right{
+    border-left: solid rgba(236, 236, 236, 0.952) 2px;
+}
+
+.leave-history{
+    max-width : 700px;
+    width : 95%;
+    margin : auto;
+    padding : 10px;
+    margin-top : 40px;
+    display: none;
+    visibility: collapse;
+}
+.leave-history h2, #leave-container h2{
+    text-align : center;
+    color : #DC2626;
+    font-size : 25px;
+    margin-top : 30px;
+}
+#leave-container h2{
+    font-size : 25px;
+    margin-top : 50px;
+}
+.leave-item{
+    background-color: #F5F5F5;
+    padding : 25px;
+    margin : 30px auto;
+    border : solid 3px #E4E4E7;
+}
+
+.leave-item h3{
+    margin-bottom : 10px;
+    letter-spacing: 1px;
+}
+
+.leave-item .date{
+    margin: 5px auto;
+    display : block;
+    color : #B91C1C;
+    /* font-weight: bold; */
+}
+
+.leave-item .reason span{
+    /* font-weight: 700; */
+    font-size: 16px;
+}
+
+.status{
+    float : right;
+    color : #737373;
+    font-size : 16px;
+    font-weight: 500;
+}
+
+.footer{
+    background-color: #525252;
+    padding : 40px;
+    color : white;
+    margin-top : 40px;
+    text-align: center;
+    font-size : 14px;
+}
+.footer p{
+    margin:20px auto;
+    max-width: 900px;
+    width : 85%;
+}
+
+button:focus{
+    outline : none;
+}
+
+.back-btn{
+    background-color: #16A34A;
+    float : left;
+    width : 150px;
+    border-radius: 0;
+    top : 0;
+    margin-left : 10px;
+    display : none;
+    visibility : collapse;
+}
+
+.back-btn:hover{
+    background-color: #15803D;
+}
+
+.no-leave{
+    text-align : center;
+    font-size : 18px;
+    color : #0EA5E9;
+    border : dashed #0EA5E9 2px;
+    margin : 30px auto;
+    padding : 20px 30px;
+    margin-top : 50px;
+    max-width : 550px;
+    width : 90%;
+}
+
+#leave-container .uid{
+    text-align : left;
+    color : rgb(19, 1, 179);
+    font-size: 21px;
+    margin-top : 0;
+    margin-bottom : 10px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+#leave-container .name{
+    margin-bottom : 20px;
+    color : rgb(109, 108, 108);
+    font-size : 18px;
+}
+
+#leave-container .date{
+    font-weight : 700;
+}
+
+#leave-container .approve{
+    width : unset;
+    margin-top : 20px;
+    background-color: #16a322;
+    padding : 10px 20px;
+    border-radius: 0px;
+    width : 95px;
+    margin-bottom : 0;
+}
+#leave-container .approve:hover{
+    background-color: #15801e;
+}
+
+#reason{
+    margin-top : 10px;
+}
+
+#leave-container .reject{
+    width : unset;
+    margin-top : 20px;
+    background-color: #DC2626;
+    padding : 10px 20px;
+    border-radius: 0px;
+    width : 95px;
+    margin-left : 5px;
+    margin-bottom : 0;
+}
+#leave-container .reject:hover{
+    background-color: #B91C1C;
+}
+
+.admin-leaves{
+    visibility : collapse;
+    display : none;
+}
+
+.icon{
+    margin-right : 5px;
+    color : rgba(0, 0, 0, 0.63);
+}
+
+
+@media only screen and (max-width: 950px){
+    .element-leave{
+        width : 100%;
+        max-width : 550px;
+    }
+    .form-leave{
+        width : 93%;
+    }
+    .form-leave label {
+        margin: 10px 5px;
+    }
+}
+
+@media only screen and (max-width: 800px){
+    .registration-form{
+        padding : 40px 20px;
+    }
+
+    .left{
+        visibility: collapse;
+        display: none;
+    }
+
+    .right {
+        width : 100%;
+    }
+    /* .header ul {
+        padding-bottom: 20px;
+    } */
+    .user{
+        top: 30px;
+    }
+    .title{
+        display : none;
+        visibility: collapse;
+    }
+    .lms-logo {
+        height: 80px;
+    }
+    .leave-history h2, #leave-container h2 {
+        font-size: 20px;
+        margin-top : 50px;
+    }
+    .heading{
+        font-size : 22px;
+    }
+    .leave-item {
+        padding: 25px 20px;
+    }
+    .status{
+        font-size : 14px;
+    }
+    #leave-container {
+        padding: 0px 20px;
+    }
+}
+
+@media only screen and (max-width: 540px){
+
+    .form label{
+        display : block;
+        /* width : 50%; */
+        text-align: left;
+    }
+    .element-leave{
+        display: inherit;
+        margin : 40px auto;
+    }
+    
+    .form-leave{
+        width : 80%;
+        margin-top : 90px;
+    }
+    .form-leave select, .form-leave input {
+        width: 100%;
+        max-width : 500px;
+        margin-left : auto;
+        margin-right : auto;
+        height : 35px;
+    }
+    .form-leave textarea {
+        width : 100%;
+        max-width: 500px;
+    }
+    .leave-btn{
+        margin : 0 auto;
+        bottom: 10px;
+        position: relative;
+    }
+    .footer{
+        padding : 30px;
+    }
+    .ele, .ele label, .ele input{
+        display : block;
+        width : 100%;
+    }
+    .ele input{
+        width : 100%;
+        max-width : unset;
+    }
+    .container-register{
+        margin : 0;
+        width : 100%;
+        box-shadow: unset;
+    }
+    
+}
+

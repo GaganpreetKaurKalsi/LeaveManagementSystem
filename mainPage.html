@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Management System</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+    
+    <script src="https://kit.fontawesome.com/d733855d1a.js" crossorigin="anonymous"></script>
+
+</head>
+<body onload="user()">
+    <header class="header">
+        <ul>
+            <li class="logo">
+                <img src="images/logo.png" alt="logo" class="lms-logo">
+            </li>
+            <li class="title"><span>L</span>eave <span>M</span>anagement <span>S</span>ystem</li>
+            <li class="user" id = "LoggedUser"><i class="fas fa-user"></i></li>
+        </ul>
+    </header>
+
+    <div class="student" id = "student">
+        <div class="heading">Student Leave Apply</div>
+        <button class="btn button history-btn" onclick="getLeaves()"><i class="fas fa-history"></i>  Leave History</button>
+        <button class="btn button back-btn" onclick="back()" id = "back-btn"><i class="fas fa-arrow-left"></i> Back</button>
+        <div class="form-leave form" id = "form-leave">
+            <div class="element element-leave">
+                <label for="type">Leave Applied for </label>
+                <select name="leaveType" id="leaveType">
+                    <option value="select">Select</option>
+                    <option value="General">General Leave</option>
+                    <option value="Medical">Medical Leave</option>
+                    <option value="Duty">Duty Leave</option>
+                </select>
+            </div>
+            
+            <div class="element element-leave">
+                <label for="start-date"> Applying from date</label>
+                <input type="date" name="start-date" id="start-date">
+            </div>
+            
+            <div class="element element-leave">
+                <label for="end-date">Applying to date</label>
+                <input type="date" name="end-date" id="end-date">
+            </div>
+            
+            <div class="element element-leave">
+                <label for="reason">Reason</label>
+                <textarea name="reason" id="leave-reason" cols="40" rows="5" placeholder="Enter the reason for leave in detail......"></textarea>
+            </div>
+    
+            <button class="btn leave-btn" onclick = "applyLeave()">Submit</button>
+    
+        </div>
+        <div class="leave-history" id = "leave-history">
+            
+        </div>
+    </div>
+    
+
+    <div class="admin-leaves" id = "admin-leaves">
+        <div class="heading" id = "leave-approval">Pending leaves for Approval</div>
+        <div id = "leave-container">
+            <h2 class="leave-head" id = "container-head">Leaves</h2>
+            <!-- <div class="leave-item">
+                <h2 class="uid">19BCS6047</h2>
+                <h3 class="name">Gaganpreet Kaur Kalsi</h3>
+                <h4 id = "leave-type">General Leave</h4>
+                <small class="date" id = "date">28-03-2021 to 30-03-2021</small>
+                <p class="reason" id = "reason"><span>Reason - </span> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam commodi excepturi quas! Corrupti ad accusamus aliquid officia, numquam dolore explicabo, reiciendis sequi sapiente culpa commodi illo consectetur. Aliquam, error distinctio.</p>
+                <button class="btn button approve" id = "approve-btn" onclick="approve()">Approve</button>
+            </div> -->
+        </div>
+    </div>
+
+
+    <footer class="footer">
+        <p>Group Project | Topic - Smart Attendance Management System | Frontend for leave management</p>
+        <p>Teammates - Gaganpreet Kaur Kalsi, Ayushi Gupta, Samyak Jain, Anshul</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
