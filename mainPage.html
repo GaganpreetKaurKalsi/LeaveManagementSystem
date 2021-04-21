@@ -12,6 +12,15 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
     
     <script src="https://kit.fontawesome.com/d733855d1a.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var queryString = decodeURIComponent(window.location.search);
+        queryString = queryString.substring(1);
+        var queries = queryString.split("&");
+        LoggedId = queries[0].split("=")[1];
+        if(localStorage.getItem(LoggedId) === null || localStorage.getItem(LoggedId) === undefined){
+                window.location.href = "http://127.0.0.1:5500/";
+    };
+  </script>
 
 </head>
 <body onload="user()">

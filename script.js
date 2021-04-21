@@ -121,6 +121,7 @@ function studentLogin(){
         console.log(FullName)
         if(userId.value === uid && pwd.value === password){
             LoggedId = uid;
+            localStorage.setItem(LoggedId, true);
             window.location.href = "/mainPage.html" + "?uid="+LoggedId;
         }
         else{
@@ -141,7 +142,8 @@ function adminLogin(){
     });
     setTimeout(function(){
         if(userId.value === id && pwd.value === password){
-            window.location.href = "/mainPage.html";
+            localStorage.setItem(userId.value, true);
+            window.location.href = "/mainPage.html"+ "?uid="+userId.value;
         }
         else{
             alert("UserId or Password Incorrect");
@@ -154,17 +156,17 @@ function user(){
     var queryString = decodeURIComponent(window.location.search);
     queryString = queryString.substring(1);
     var queries = queryString.split("&");
-    // console.log(queries);
     LoggedId = queries[0].split("=")[1];
-    if(queries[0]!==""){
+
+    if(LoggedId=="admin"){
+        document.getElementById("LoggedUser").innerHTML = `<i class="fas fa-user"></i> `+ " Admin";
+        adminApprove();
+    }
+    else{
         firebase.database().ref('StudentsData/'+LoggedId).on('value', function(snapshot){
                 FullName = snapshot.val().name;
                 document.getElementById("LoggedUser").innerHTML = `<i class="fas fa-user"></i> `+ FullName;
         });   
-    }
-    else{
-        document.getElementById("LoggedUser").innerHTML = `<i class="fas fa-user"></i> `+ " Admin";
-        adminApprove();
     }
 }
 
