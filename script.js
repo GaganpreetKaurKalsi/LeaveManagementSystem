@@ -121,7 +121,8 @@ function studentLogin(){
         console.log(FullName)
         if(userId.value === uid && pwd.value === password){
             LoggedId = uid;
-            localStorage.setItem(LoggedId, true);
+            const now = new Date()
+            localStorage.setItem(LoggedId, now.getTime() + 900000)
             window.location.href = "/mainPage.html" + "?uid="+LoggedId;
         }
         else{
@@ -142,7 +143,8 @@ function adminLogin(){
     });
     setTimeout(function(){
         if(userId.value === id && pwd.value === password){
-            localStorage.setItem(userId.value, true);
+            const now = new Date()
+            localStorage.setItem(userId.value, now.getTime() + 60000)
             window.location.href = "/mainPage.html"+ "?uid="+userId.value;
         }
         else{
