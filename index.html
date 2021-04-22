@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave Management System</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
-    
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
 </head>
 <body>
     <div class="background"><img src="images/Backgroundimg.jpg" alt=""><div class="layer"></div></div>
@@ -26,7 +28,7 @@
                     <input type="text" placeholder="Enter User Id" name = "userId" class="input block username" id = "username">
                     <input type="password" placeholder="Enter Password" name = "pwd" class="input block password" id = "password">
                     <button class="btn block" onclick="studentLogin()">Login</button>
-                    <small class="forgotpwd"><a href="/">Forgot Password?</a></small>
+                    <small class="forgotpwd"><a onclick = "forgotPwdPopUp()">Forgot Password?</a></small>
                 </div>
                 <div class="admin-fields" id = "admin-fields">
                     <input type="text" placeholder="Enter Admin Id" name = "AdminId" class="input block username" id = "adminId">
@@ -35,6 +37,32 @@
                     <small class="forgotpwd"><a href="/">Forgot Password?</a></small>
                 </div>
             </div>
+        </div>
+        <div class="forgot-container">
+            <div class="forgot-pwd-popup">
+                <h2 class="forgot-title">PASSWORD RECOVERY <span class="close" onclick="closeForgotPwdPopUp()"><i class="fas fa-times"></i></span></h2>
+                <div class="verify">
+                    <p>Forgot your password? Don't worry. We are here to help you out. Just tell us your uid and date of birth registered with LMS.</p>
+                    <input type="text" placeholder="UID" name = "UID" class="input block username" id = "UID">
+                    <input type="text" name="DOB" id="DOB" class="input block username" placeholder = "Date of Birth" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                    <button class="btn block forgot-pwd" onclick = "sendOTP()">Continue</button>
+                </div>
+                <div class="confirmOTP">
+                    <p>Enter the OTP sent on your registered email Id. The OTP is valid for 15 mins.</p>
+                    <input type="text" name="OTP" id="UserOTP" class="input block username" placeholder="Enter OTP">
+                    <button class="btn block forgot-pwd" onclick = "confirmOTP()">Continue</button>
+                    <small id = "timer"></small>
+                </div>
+                <div class="reset-pwd">
+                    <p>Set a new password for your account.</p>
+                    <input type="password" placeholder="New Password" name = "pwd" class="input block password" id = "newpwd">
+                    <input type="password" placeholder="Confirm Password" name = "pwd" class="input block password" id = "confirmpwd">
+                    <button class="btn block forgot-pwd" onclick = "resetPwd()">RESET</button>
+                </div>
+            </div>
+        </div>
+        <div class="coverage">
+                
         </div>
     </div>
     <script src="script.js"></script> 

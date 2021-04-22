@@ -503,7 +503,77 @@ button:focus{
     margin-right : 5px;
     color : rgba(0, 0, 0, 0.63);
 }
+.forgotpwd{
+    cursor: pointer;
+}
 
+.forgot-container{
+    position: fixed;
+    top : 30px;
+    max-width: 500px;
+    width: 95%;
+    z-index : 2;
+    left :0;
+    right:0;
+    margin : auto;
+    display : none;
+    visibility: collapse;
+}
+.forgot-pwd-popup{
+    background-color: white;
+    color : black;
+    margin : 20px auto;
+    position : absolute;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.forgot-pwd-popup p{
+    font-size : 14px;
+    padding : 40px 70px 20px 70px;
+    text-align: center;
+    color : rgb(34, 34, 34);
+}
+.forgot-pwd-popup .forgot-pwd{
+    margin-bottom : 50px;
+}
+.forgot-title{
+    font-size: 20px;
+    font-family: 'Merriweather', serif;
+    color: white;
+    background-color: #27272A;
+    padding : 20px;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+    font-weight: 100;
+}
+.forgot-pwd-popup input{
+    border : 1px solid #A1A1AA;
+}
+.coverage{
+    background-color: #e4e4e6ef;
+    position: fixed;
+    height : 100%;
+    width : 100%;
+    z-index : 1;
+    top : 0;
+    display : none;
+    visibility: collapse;
+}
+
+.close{
+    float : right;
+    top : -8px;
+    top: -5px;
+    position: relative;
+    cursor: pointer;
+}
+.confirmOTP, .reset-pwd{
+    display : none;
+    visibility: collapse;
+}
+.forgot-pwd-popup{
+    width : 100%;
+}
 
 @media only screen and (max-width: 950px){
     .element-leave{

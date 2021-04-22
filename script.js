@@ -413,3 +413,130 @@ function reject(uid, date_time){
     document.getElementById(uid+date_time).querySelector("#approve-btn").style.cursor = "auto";
     document.getElementById(uid+date_time).querySelector("#reject-btn").style.cursor = "auto";
 }
+
+
+function forgotPwdPopUp(){
+    var ele1 = document.querySelector(".coverage");
+    var ele2 = document.querySelector(".forgot-container");
+    console.log(ele1, ele2);
+    ele1.style.visibility = "visible";
+    ele1.style.display = "block";
+    ele2.style.visibility = "visible";
+    ele2.style.display = "block";
+
+    document.querySelector(".verify").querySelector("#UID").value = "";
+    document.querySelector(".verify").querySelector("#DOB").value = "";
+}
+
+function closeForgotPwdPopUp(){
+    var ele1 = document.querySelector(".coverage");
+    var ele2 = document.querySelector(".forgot-container");
+    console.log(ele1, ele2);
+    ele1.style.visibility = "collapse";
+    ele1.style.display = "none";
+    ele2.style.visibility = "collapse";
+    ele2.style.display = "none";
+    collapse_forgotpwd();
+}
+
+var OTP;
+var uid;
+
+function sendOTP(){
+
+    uid = document.getElementById("UID").value;
+    var dob = document.getElementById("DOB").value;
+    var dob_in_db;
+    var email;
+    var student = firebase.database().ref('StudentsData/'+uid)
+    
+    if(student === null || student === undefined){
+        alert("User not registered");
+    }
+    else{
+        student.on('value', function(snapshot){
+            dob_in_db = snapshot.val().dob;
+            email = snapshot.val().email;
+        });
+
+        if(dob_in_db !== dob){
+            alert("UID or DOB incorrect");
+        }
+        else{
+            OTP = Math.random().toString(36).slice(2);
+
+            // Email.send({
+            //     Host: "smtp.gmail.com",
+            //     Username: "webdevelopermail06@gmail.com",
+            //     Password: "webdev06",
+            //     To: email,
+            //     From: "webdevelopermail06@gmail.com",
+            //     Subject: "Password reset request for LMS",
+            //     Body: `OTP for Password Recovery of your CUIMS is ${OTP} and is valid for next 15 mins.`,
+            // })
+            //     .then(function (message) {
+            //     alert("Verification mail sent successfully!")
+            //     });
+            
+            var ele = document.querySelector(".verify");
+            ele.style.visibility = "collapse";
+            ele.style.display = "none";
+
+            var ele2 = document.querySelector(".confirmOTP");
+            ele2.style.visibility = "visible";
+            ele2.style.display = "block";
+            ele2.querySelector("#UserOTP").value = "";
+            
+        }
+
+    }
+}
+
+function confirmOTP(){
+    if(document.getElementById("UserOTP").value === OTP){
+        var ele = document.querySelector(".confirmOTP");
+        ele.style.visibility = "collapse";
+        ele.style.display = "none";
+
+        ele = document.querySelector(".reset-pwd");
+        ele.style.visibility = "visible";
+        ele.style.display = "block";
+        ele.querySelector("#newpwd").value = "";
+        ele.querySelector("#confirmpwd").value = "";
+    }
+    else{
+        alert("OTP not verified");
+        document.querySelector("#UserOTP").value = "";
+    };
+}
+
+function resetPwd(){
+    var newpwd = document.getElementById("newpwd");
+    var confirmpwd = document.getElementById("confirmpwd");
+    if(newpwd.value !== confirmpwd.value){
+        alert("Passwords do not match. Please try again!");
+        newpwd.value = "";
+        confirmpwd.value = "";
+    }
+    else{
+        firebase.database().ref('StudentsData/'+uid).update({
+            password : newpwd.value
+        })
+        alert("Password reset successful");
+        window.location.href = "https://leave-management-sys.netlify.app/";
+        collapse_forgotpwd();
+        
+    }
+}
+
+function collapse_forgotpwd(){
+    var ele = document.querySelector(".confirmOTP");
+    ele.style.visibility = "collapse";
+    ele.style.display = "none";
+    var ele = document.querySelector(".reset-pwd");
+    ele.style.visibility = "collapse";
+    ele.style.display = "none";
+    ele = document.querySelector(".verify");
+    ele.style.visibility = "visible";
+    ele.style.display = "block";
+}
