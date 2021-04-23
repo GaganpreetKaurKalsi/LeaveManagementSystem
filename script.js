@@ -61,6 +61,7 @@ function submitStudentData(event){
     event.preventDefault();
     var name = document.getElementById("name");
     var uid = document.getElementById("uid");
+    var dob = document.getElementById("dob");
     var email = document.getElementById("email");
     var mobile = document.getElementById("mobile");
     var password = document.getElementById("pwd");
@@ -79,6 +80,7 @@ function submitStudentData(event){
             firebase.database().ref('StudentsData/'+uid.value).set({
                 name : name.value,
                 uid : uid.value,
+                dob : dob.value,
                 email : email.value,
                 mobile : mobile.value,
                 password : password.value
