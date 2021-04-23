@@ -449,50 +449,51 @@ function sendOTP(){
     var dob_in_db;
     var email;
     var student = firebase.database().ref('StudentsData/'+uid)
-    
-    if(student === null || student === undefined){
-        alert("User not registered");
-    }
-    else{
-        student.on('value', function(snapshot){
-            dob_in_db = snapshot.val().dob;
-            email = snapshot.val().email;
-        });
+    student.on('value', function(snapshot){
+        dob_in_db = snapshot.val().dob;
+        email = snapshot.val().email;
+    });
 
-        if(dob_in_db !== dob){
-            alert("UID or DOB incorrect");
+    setTimeout(function(){
+        if(student === null || student === undefined){
+            alert("User not registered");
         }
         else{
-            OTP = Math.random().toString(36).slice(2);
-
-            // Email.send({
-            //     Host: "smtp.gmail.com",
-            //     Username: "webdevelopermail06@gmail.com",
-            //     Password: "webdev06",
-            //     To: email,
-            //     From: "webdevelopermail06@gmail.com",
-            //     Subject: "Password reset request for LMS",
-            //     Body: `OTP for Password Recovery of your CUIMS is ${OTP} and is valid for next 15 mins.`,
-            // })
-            //     .then(function (message) {
-            //     alert("Verification mail sent successfully!")
-            //     });
-            
-            var ele = document.querySelector(".verify");
-            ele.style.visibility = "collapse";
-            ele.style.display = "none";
-
-            var ele2 = document.querySelector(".confirmOTP");
-            ele2.style.visibility = "visible";
-            ele2.style.display = "block";
-            ele2.querySelector("#UserOTP").value = "";
-            
-        }
-
-    }
+    
+            if(dob_in_db !== dob){
+                alert("UID or DOB incorrect");
+            }
+            else{
+                OTP = Math.random().toString(36).slice(2);
+    
+                // Email.send({
+                //     Host: "smtp.gmail.com",
+                //     Username: "webdevelopermail06@gmail.com",
+                //     Password: "webdev06",
+                //     To: email,
+                //     From: "webdevelopermail06@gmail.com",
+                //     Subject: "Password reset request for LMS",
+                //     Body: `OTP for Password Recovery of your CUIMS is ${OTP} and is valid for next 15 mins.`,
+                // })
+                //     .then(function (message) {
+                //     alert("Verification mail sent successfully!")
+                //     });
+                set_timer_15();
+                var ele = document.querySelector(".verify");
+                ele.style.visibility = "collapse";
+                ele.style.display = "none";
+    
+                var ele2 = document.querySelector(".confirmOTP");
+                ele2.style.visibility = "visible";
+                ele2.style.display = "block";
+                ele2.querySelector("#UserOTP").value = "";   
+            }
+        }    
+    },4000); 
 }
 
 function confirmOTP(){
+    
     if(document.getElementById("UserOTP").value === OTP){
         var ele = document.querySelector(".confirmOTP");
         ele.style.visibility = "collapse";
@@ -539,4 +540,33 @@ function collapse_forgotpwd(){
     ele = document.querySelector(".verify");
     ele.style.visibility = "visible";
     ele.style.display = "block";
+}
+
+function set_timer_15(){
+    var min = 15;
+    var sec = 00;
+
+    var timeStr = min + ":0" + sec;
+
+    document.getElementById("timer").innerText = "Remaining Time - " + timeStr;
+    console.log(timeStr);
+    setInterval(function tick(){
+        if(sec>0){
+            sec = sec - 1;
+        }
+        else if(sec == 0){
+            sec = 59;
+            min = min - 1;
+        }
+        if(!(sec<10) && !(min<10)){
+            timeStr = min + ":" + sec;
+        }
+        if(sec<10){
+            timeStr = min + ":0" +sec;
+        }
+        if(min<10){
+            timeStr = "0" + min + ":" +sec;
+        }
+        document.getElementById("timer").innerText = "Remaining Time - " + timeStr;
+    },1000)
 }

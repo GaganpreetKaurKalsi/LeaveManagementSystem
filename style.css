@@ -574,6 +574,13 @@ button:focus{
 .forgot-pwd-popup{
     width : 100%;
 }
+#timer{
+    color : #B91C1C;
+    text-align: center;
+    display : block;
+    font-weight : bold;
+    margin-bottom : 20px;
+}
 
 @media only screen and (max-width: 950px){
     .element-leave{
