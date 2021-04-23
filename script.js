@@ -76,22 +76,27 @@ function submitStudentData(event){
             uid_db = snapshot.val().uid; 
         });
         console.log(uid_db);
-        if(uid_db === undefined){
-            firebase.database().ref('StudentsData/'+uid.value).set({
-                name : name.value,
-                uid : uid.value,
-                dob : dob.value,
-                email : email.value,
-                mobile : mobile.value,
-                password : password.value
-            });
-            alert("Registered Successfully!");
-            clearFields(name, email, mobile, password, confirm_pwd);
-        }
-        else{
-            alert("Student registered already!");
-            clearFields(name, email, mobile, password, confirm_pwd);
-        }
+        setTimeout(function(){
+            
+            if(uid_db === undefined){
+                firebase.database().ref('StudentsData/'+uid.value).set({
+                    name : name.value,
+                    uid : uid.value,
+                    dob : dob.value,
+                    email : email.value,
+                    mobile : mobile.value,
+                    password : password.value
+                });
+                alert("Registered Successfully!");
+                clearFields(name, email, mobile, password, confirm_pwd);
+            }
+            else{
+                alert("Student registered already!");
+                clearFields(name, email, mobile, password, confirm_pwd);
+            }
+            
+        },2000);
+        
     }
 }
 

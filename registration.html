@@ -18,7 +18,7 @@
             <img src="images/registration image.jpg" alt="">
         </div>
         <div class="right">
-            <form action="" class="registration-form">
+            <form action="" class="registration-form"  onsubmit="submitStudentData(event)">
                 <h2 class="head">STUDENT REGISTRATION FORM</h2>
                 <!-- <hr> -->
                 
@@ -57,7 +57,7 @@
                     <input type="password" name="confirm-pwd" id="confirm-pwd" placeholder="Confirm password" required>
                 </div>
         
-                <button class="btn btn-register" onclick="submitStudentData(event)">Submit</button>
+                <button class="btn btn-register" type="submit">Submit</button>
             </form>
         </div>
     </div>
