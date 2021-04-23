@@ -468,18 +468,18 @@ function sendOTP(){
             else{
                 OTP = Math.random().toString(36).slice(2);
     
-                // Email.send({
-                //     Host: "smtp.gmail.com",
-                //     Username: "webdevelopermail06@gmail.com",
-                //     Password: "webdev06",
-                //     To: email,
-                //     From: "webdevelopermail06@gmail.com",
-                //     Subject: "Password reset request for LMS",
-                //     Body: `OTP for Password Recovery of your CUIMS is ${OTP} and is valid for next 15 mins.`,
-                // })
-                //     .then(function (message) {
-                //     alert("Verification mail sent successfully!")
-                //     });
+                Email.send({
+                    Host: "smtp.gmail.com",
+                    Username: "webdevelopermail06@gmail.com",
+                    Password: "webdev06",
+                    To: email,
+                    From: "webdevelopermail06@gmail.com",
+                    Subject: "Password reset request for LMS",
+                    Body: `OTP for Password Recovery of your CUIMS is ${OTP} and is valid for next 15 mins.`,
+                })
+                    .then(function (message) {
+                    alert("Verification mail sent successfully!")
+                    });
                 set_timer_15();
                 var ele = document.querySelector(".verify");
                 ele.style.visibility = "collapse";
