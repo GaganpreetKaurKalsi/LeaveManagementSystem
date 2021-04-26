@@ -642,9 +642,6 @@ button:focus{
     clear: both;
     margin-bottom : 50px;
 }
-.center{
-    text-align: center;
-}
 .profile-container{
     font-family: 'Noto Sans JP', sans-serif;
     display: none;
@@ -659,6 +656,7 @@ button:focus{
 }
 .grid-container .grid-item{
     margin-bottom : 20px;
+    overflow-wrap: break-word;
 }
 .grid-container .align-left{
     text-align : left;
@@ -790,6 +788,14 @@ button:focus{
         width : 100%;
         box-shadow: unset;
     }
-    
+    .center{
+        text-align: center;
+    }
+    .grid-container{
+        margin-top : 90px;
+    }
+    .profile-container .info {
+        font-size: 15px;
+    }
 }
 
