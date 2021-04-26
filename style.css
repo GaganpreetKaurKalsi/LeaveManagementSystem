@@ -638,9 +638,12 @@ button:focus{
     width : 80%;
     margin-top : 50px; 
     justify-content: center;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 50% 50%;
     clear: both;
     margin-bottom : 50px;
+}
+.center{
+    text-align: center;
 }
 .profile-container{
     font-family: 'Noto Sans JP', sans-serif;
