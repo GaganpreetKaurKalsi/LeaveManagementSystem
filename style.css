@@ -797,5 +797,8 @@ button:focus{
     .profile-container .info {
         font-size: 15px;
     }
+    .profile-img{
+        margin-top : 20px;
+    }
 }
 
