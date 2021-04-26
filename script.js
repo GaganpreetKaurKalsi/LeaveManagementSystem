@@ -163,7 +163,7 @@ function studentLogin(){
     var uid;
     var password;
 
-    firebase.database().ref('StudentsData/'+userId.value).on('value', function(snapshot){
+    firebase.database().ref('StudentsData/'+userId.value.toUpperCase()).on('value', function(snapshot){
         uid = snapshot.val().uid;
         password = snapshot.val().password; 
         FullName = snapshot.val().name;
@@ -172,7 +172,7 @@ function studentLogin(){
         console.log(userId.value, pwd.value);
         console.log(uid, password);
         console.log(FullName)
-        if(userId.value === uid && pwd.value === password){
+        if(userId.value.toUpperCase() === uid && pwd.value === password){
             LoggedId = uid;
             const now = new Date()
             localStorage.setItem(LoggedId, now.getTime() + 6000000)
@@ -661,7 +661,8 @@ function dropdown(){
         ele.style.visibility = "visible";
         ele.style.display = "block";
     }
-    
+
+    document.getElementById("id_li").innerHTML = `<i class="fas fa-id-badge icon"></i> ${globalData[1]}`;
 }
 
 
