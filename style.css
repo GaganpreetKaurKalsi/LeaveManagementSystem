@@ -23,15 +23,17 @@ body{
     height: 100%;
     width: 100%;
     z-index : -1;
-    filter: blur(10px);
-    -webkit-filter: blur(10px);
+    filter: blur(50px);
+    -webkit-filter: blur(50px);
+    transform: scale(1.1);
 }
 .layer{
     height : 100%;
     position : fixed;
     width : 100%;
-    background-color: rgba(0, 0, 0, 0.322);
+    background-color: rgba(0, 0, 0, 0.603);
     z-index : 0;
+    
 }
 
 .container{
