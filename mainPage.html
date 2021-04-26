@@ -48,8 +48,8 @@
 
     <div class="profile hide" id = "dropoptions">
         <ul>
-            <div class="tab prof" onclick="profile()"><li><i class="fas fa-user icon"></i> Profile</li></div>
-            <div class="tab id"><li id = "id_li"></li></div>
+            <div class="tab prof" id = "profile-tab" onclick="profile()"><li><i class="fas fa-user icon"></i> Profile</li></div>
+            <div class="tab id" id = "id-tab"><li id = "id_li"></li></div>
             <div class="tab logout" onclick="logout()"><li><i class="fas fa-sign-out-alt icon"></i> LOG OUT</li></div>
         </ul>
     </div>
@@ -95,16 +95,26 @@
             <h4 class="grid-item head head1">Student Profile</h4>
             <h2 class="grid-item head head2" id = "uid-head"></h2>
             <h3 class="grid-item head align-left head3"><u>Student Personal Information</u></h3>
-            <p class="name grid-item info">Full name</p>
+            <p class="name grid-item info head-info">FULL NAME</p>
             <p class="name-info grid-item info" id="input-name"></p>
-            <p class="uid grid-item info">UID</p>
+            <p class="uid grid-item info head-info">UID</p>
             <p class="uid-info grid-item info" id="input-uid"></p>
-            <p class="dob grid-item info">Date of Birth</p>
+            <p class="dob grid-item info head-info">DATE OF BIRTH</p>
             <p class="dob-info grid-item info" id="input-dob"></p>
-            <p class="email grid-item info">Email</p>
+            <p class="email grid-item info head-info">EMAIL</p>
             <p class="email-info grid-item info" id="input-email"></p>
-            <p class="contact grid-item info">Contact no.</p>
+            <p class="contact grid-item info head-info">CONTACT NO.</p>
             <p class="contact-info grid-item info" id="input-contact"></p>
+
+            <h3 class="grid-item head align-left head3"><u>Leave Information</u></h3>
+            <p class="uid grid-item info head-info">TOTAL LEAVES APPLIED</p>
+            <p class="uid-info grid-item info" id="total-leaves"></p>
+            <p class="dob grid-item info head-info">TOTAL LEAVES APPROVED</p>
+            <p class="dob-info grid-item info" id="leaves-approved"></p>
+            <p class="dob grid-item info head-info">TOTAL LEAVES REJECTED</p>
+            <p class="dob-info grid-item info" id="leaves-rejected"></p>
+            <p class="dob grid-item info head-info">TOTAL LEAVES PENDING</p>
+            <p class="dob-info grid-item info" id="leaves-pending"></p>
         </div>
     </div>
     

@@ -24,16 +24,15 @@ body{
     width: 100%;
     z-index : -1;
     filter: blur(40px);
-    -webkit-filter: blur(50px);
+    -webkit-filter: blur(40px);
     transform: scale(1.5);
 }
 .layer{
     height : 100%;
     position : fixed;
     width : 100%;
-    background-color: rgba(0, 0, 0, 0.466);
+    background-color: rgba(0, 0, 0, 0.562);
     z-index : 0;
-    
 }
 
 .container{
@@ -636,7 +635,7 @@ button:focus{
     display: grid;
     max-width : 800px;
     margin : auto;
-    width : 90%;
+    width : 80%;
     margin-top : 50px; 
     justify-content: center;
     grid-template-columns: 1fr 1fr;
@@ -660,10 +659,12 @@ button:focus{
 }
 .grid-container .align-left{
     text-align : left;
-    margin-bottom : 40px;
+    margin-bottom: 20px;
+    margin-top: 30px;
 }
 .profile-container .head1{
     font-size : 18px;
+    font-weight : bold;
 }
 .profile-container .head2{
     font-size : 22px;
@@ -688,6 +689,10 @@ button:focus{
     .form-leave label {
         margin: 10px 5px;
     }
+}
+
+.profile-container .head-info{
+    color : #B91C1C;
 }
 
 @media only screen and (max-width: 800px){

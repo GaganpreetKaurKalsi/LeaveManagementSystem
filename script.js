@@ -505,6 +505,12 @@ function user(){
 
     if(LoggedId=="admin"){
         document.getElementById("LoggedUser").innerHTML = `<i class="fas fa-user"></i> `+ " Admin";
+        var ele = document.getElementById("id-tab");
+        ele.style.visibility = "collapse";
+        ele.style.display = "none";
+        var ele = document.getElementById("profile-tab");
+        ele.style.visibility = "collapse";
+        ele.style.display = "none";
         adminApprove();
     }
     else{
@@ -693,6 +699,38 @@ function profile(){
     document.getElementById("input-email").innerText = globalData[3];
     document.getElementById("input-contact").innerText = globalData[4];
     document.getElementById("input-img").querySelector("img").src = globalData[5];
+
+    firebase.database().ref('Leaves/'+LoggedId).on('value', function(snapshot){
+        var val = snapshot.val();
+        if(val!=undefined && val!=null){
+            data = Object.values(snapshot.val());
+            console.log(data);
+            var count_approved = 0;
+            var count_rejected = 0;
+            var count_pending = 0;
+            for(i in data){
+                console.log(data[i], data[i].status);
+                if(data[i].status === "Approved"){
+                    count_approved+=1;
+                }
+                else if(data[i].status === "pending"){
+                    count_pending+=1;
+                }
+                else{
+                    count_rejected+=1;
+                }
+            }
+            document.getElementById("total-leaves").innerText = data.length;
+            document.getElementById("leaves-approved").innerText = count_approved;
+            document.getElementById("leaves-pending").innerText = count_pending;
+            document.getElementById("leaves-rejected").innerText = count_rejected;
+        }
+        else{
+            data = "undefined";
+            document.getElementById("total-leaves").innerText = 0;
+            document.getElementById("leaves-approved").innerText = 0;
+        }
+    });
 }
 
 function logout(){
