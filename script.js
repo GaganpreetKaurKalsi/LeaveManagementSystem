@@ -11,6 +11,24 @@
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
+window.addEventListener('load',function(){
+    document.addEventListener('click', (evt)=>{
+        var e1 = document.getElementById("dropit");
+        var e2 = document.getElementById("dropoptions");
+        var e3 = document.getElementById("dropicon");
+        console.log(evt.target);
+        if(evt.target === e1 || evt.target === e3){
+            dropdown();
+        }
+        else if(evt.target !== e1 && evt.target !== e2 && evt.target !== e3){
+            var ele = document.getElementById("dropoptions");
+            ele.style.visibility = "collapse";
+            ele.style.display = "none";
+            var ele = document.getElementById("dropoptions");
+            ele.classList.add("hide");
+        }
+    });
+});
 
 var element = document.querySelector(".right");
 document.querySelector(".left").style.height = getComputedStyle(element).height;
@@ -18,6 +36,85 @@ document.querySelector(".container-register").style.height = getComputedStyle(el
 console.log(getComputedStyle(element).height);
 
 
+
+// Script running on registration.html
+function submitStudentData(event){
+    event.preventDefault();
+    var name = document.getElementById("name");
+    var uid = document.getElementById("uid");
+    var dob = document.getElementById("dob");
+    var email = document.getElementById("email");
+    var mobile = document.getElementById("mobile");
+    var password = document.getElementById("pwd");
+    var confirm_pwd = document.getElementById("confirm-pwd");
+
+    var img = document.getElementById("uploadimg").files[0];
+    var uploadTask = firebase.storage().ref('Images/'+img.name).put(img);
+
+    if(password.value !== confirm_pwd.value){
+        alert("Passwords did not match. Please try again!");
+    }
+    else{
+        var uid_db;
+        firebase.database().ref('StudentsData/'+uid.value.toUpperCase()).on('value', function(snapshot){
+            uid_db = snapshot.val().uid; 
+        });
+
+        setTimeout(function(){
+            
+            if(uid_db === undefined){
+                
+                uploadTask.on('state_changed', function(snapshot){
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                },
+                function(error){
+                    alert('Error in saving the image. Please try again!');
+                },
+                function(){
+                    uploadTask.snapshot.ref.getDownloadURL().then(function(url){
+                        ImgUrl = url;
+                        firebase.database().ref('StudentsData/'+uid.value.toUpperCase()).set({
+                            name : name.value,
+                            uid : uid.value.toUpperCase(),
+                            dob : dob.value,
+                            email : email.value,
+                            mobile : mobile.value,
+                            password : password.value,
+                            img : ImgUrl
+                        });
+                        alert("Registered Successfully!");
+                        clearFields(name, email, mobile, password, confirm_pwd, uid, dob, img);
+                        document.getElementById("uploadimg").value = "";
+                    }
+                );
+                });   
+                
+            }
+            else{
+                alert("Student registered already!");
+                clearFields(name, email, mobile, password, confirm_pwd, uid, dob);
+                document.getElementById("uploadimg").value = "";
+            }
+            
+        },2000);
+        
+    }
+}
+
+function clearFields(name, email, mobile, password, confirm_pwd, uid, dob){
+    name.value = "";
+    email.value = "";
+    mobile.value = "";
+    password.value = "";
+    confirm_pwd.value = "";
+    uid.value = "";
+    dob.value = ""; 
+}
+
+
+
+
+// Scripts running on index.html
 
 var user = 0
 function admin(){
@@ -57,57 +154,6 @@ function student(){
     element.style.display = "none";
 }
 
-function submitStudentData(event){
-    event.preventDefault();
-    var name = document.getElementById("name");
-    var uid = document.getElementById("uid");
-    var dob = document.getElementById("dob");
-    var email = document.getElementById("email");
-    var mobile = document.getElementById("mobile");
-    var password = document.getElementById("pwd");
-    var confirm_pwd = document.getElementById("confirm-pwd");
-
-    if(password.value !== confirm_pwd.value){
-        alert("Passwords did not match. Please try again!");
-    }
-    else{
-        var uid_db;
-        firebase.database().ref('StudentsData/'+uid.value).on('value', function(snapshot){
-            uid_db = snapshot.val().uid; 
-        });
-        console.log(uid_db);
-        setTimeout(function(){
-            
-            if(uid_db === undefined){
-                firebase.database().ref('StudentsData/'+uid.value).set({
-                    name : name.value,
-                    uid : uid.value,
-                    dob : dob.value,
-                    email : email.value,
-                    mobile : mobile.value,
-                    password : password.value
-                });
-                alert("Registered Successfully!");
-                clearFields(name, email, mobile, password, confirm_pwd);
-            }
-            else{
-                alert("Student registered already!");
-                clearFields(name, email, mobile, password, confirm_pwd);
-            }
-            
-        },2000);
-        
-    }
-}
-
-function clearFields(name, email, mobile, password, confirm_pwd){
-    name.value = "";
-    email.value = "";
-    mobile.value = "";
-    password.value = "";
-    confirm_pwd = "";
-}
-
 var LoggedId;
 var FullName;
 
@@ -129,7 +175,7 @@ function studentLogin(){
         if(userId.value === uid && pwd.value === password){
             LoggedId = uid;
             const now = new Date()
-            localStorage.setItem(LoggedId, now.getTime() + 900000)
+            localStorage.setItem(LoggedId, now.getTime() + 6000000)
             window.location.href = "/mainPage.html" + "?uid="+LoggedId;
         }
         else{
@@ -151,7 +197,7 @@ function adminLogin(){
     setTimeout(function(){
         if(userId.value === id && pwd.value === password){
             const now = new Date()
-            localStorage.setItem(userId.value, now.getTime() + 60000)
+            localStorage.setItem(userId.value, now.getTime() + 6000000)
             window.location.href = "/mainPage.html"+ "?uid="+userId.value;
         }
         else{
@@ -161,145 +207,13 @@ function adminLogin(){
     
 }
 
-function user(){
-    var queryString = decodeURIComponent(window.location.search);
-    queryString = queryString.substring(1);
-    var queries = queryString.split("&");
-    LoggedId = queries[0].split("=")[1];
-
-    if(LoggedId=="admin"){
-        document.getElementById("LoggedUser").innerHTML = `<i class="fas fa-user"></i> `+ " Admin";
-        adminApprove();
-    }
-    else{
-        firebase.database().ref('StudentsData/'+LoggedId).on('value', function(snapshot){
-                FullName = snapshot.val().name;
-                document.getElementById("LoggedUser").innerHTML = `<i class="fas fa-user"></i> `+ FullName;
-        });   
-    }
-}
-
-function applyLeave(){
-    var date = new Date();
-    var key = date.getDate()+"-"+String((date.getMonth())+1)+"-"+date.getFullYear()+"_"+date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds();
-    console.log(key);
-    var type = document.getElementById("leaveType");
-    var startDate = document.getElementById("start-date");
-    var endDate = document.getElementById("end-date");
-    var reason = document.getElementById("leave-reason");
-    
-    firebase.database().ref('Leaves/'+LoggedId+"/"+key).set({
-        Leavetype : type.value,
-        startDate : startDate.value,
-        endDate : endDate.value,
-        reason : reason.value,
-        status : "pending" 
-    });
-
-    alert("Leave applied successfully");
-
-    type.value = "";
-    startDate.value = "";
-    endDate.value = "";
-    reason.value = "";
-}
-
-function getLeaves(){
-    var formLeave = document.getElementById("form-leave");
-    formLeave.style.visibility = "collapse";
-    formLeave.style.display = "none";
-
-    var leaveHistory = document.getElementById("leave-history");
-    leaveHistory.style.visibility = "visible";
-    leaveHistory.style.display = "block";
-
-    var backBtn = document.getElementById("back-btn");
-    backBtn.style.visibility = "visible";
-    backBtn.style.display = "block";
-
-    var data;
-    var type, startDate, endDate, reason, status;
-    firebase.database().ref('Leaves/'+LoggedId).on('value', function(snapshot){
-        console.log(snapshot.val());
-        var val = snapshot.val();
-        console.log(val);
-        if(val!=undefined && val!=null){
-            console.log(val!=undefined && val!=null);
-            data = Object.values(snapshot.val());
-        }
-        else{
-            data = "undefined";
-        }
-    });
-    
-    document.getElementById("leave-history").innerHTML = "";
-    document.getElementById("leave-history").innerHTML = `<h2 class="leave-head" id = "leave-head">Leave History</h2>`;
-    setTimeout(function(){
-        console.log("Ensuring that the code runs after data is retreived");
-        console.log(data);
-        if(data === "undefined"){
-            document.getElementById("leave-head").insertAdjacentHTML("afterend", `<div class="no-leave">
-                <p><i class="fas fa-info-circle"></i> No leaves applied</p>
-            </div>`);
-        }
-        else{
-            for(key in data){
-                type = data[key].Leavetype;
-                startDate = data[key].startDate;
-                endDate = data[key].endDate;
-                reason = data[key].reason;
-                status = data[key].status;
-                console.log(type, startDate, endDate, reason);
-        
-                var color;
-                if(status === "rejected"){
-                    color = "#DC2626";
-                }
-                else if(status === "pending"){
-                    color = "#EA580C";
-                }
-                else{
-                    color = "#16A34A";
-                }
-        
-                document.getElementById("leave-head").insertAdjacentHTML("afterend", `<div class="leave-item">
-                <span class="status" style = "color:${color}"><i class="far fa-check-circle tick"></i> ${status}</span>
-                <h3 id = "leave-type">${type} Leave</h3>
-                <small class="date" id = "date">${startDate} to ${endDate}</small>
-                <p class="reason" id = "reason"><span>Reason - </span> ${reason}</p>
-                </div>`);
-            }
-        }
-        
-    }
-    , 1000);
-    
-    
-}
-
-function back(){
-    var formLeave = document.getElementById("form-leave");
-    formLeave.style.visibility = "visible";
-    formLeave.style.display = "block";
-
-    var leaveHistory = document.getElementById("leave-history");
-    leaveHistory.style.visibility = "collapse";
-    leaveHistory.style.display = "none";
-
-    var backBtn = document.getElementById("back-btn");
-    backBtn.style.visibility = "collapse";
-    backBtn.style.display = "none";
-}
-
-function sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-}
-
-
+// function sleep(milliseconds) {
+//     const date = Date.now();
+//     let currentDate = null;
+//     do {
+//       currentDate = Date.now();
+//     } while (currentDate - date < milliseconds);
+// }
 
 function adminApprove(){
     var student = document.getElementById("student");
@@ -576,4 +490,211 @@ function set_timer_15(){
         }
         document.getElementById("timer").innerText = "Remaining Time - " + timeStr;
     },1000)
+}
+
+
+var globalData;
+
+// Script running on mainPage.html
+function user(){
+    var queryString = decodeURIComponent(window.location.search);
+    queryString = queryString.substring(1);
+    var queries = queryString.split("&");
+    LoggedId = queries[0].split("=")[1];
+    var data = [];
+
+    if(LoggedId=="admin"){
+        document.getElementById("LoggedUser").innerHTML = `<i class="fas fa-user"></i> `+ " Admin";
+        adminApprove();
+    }
+    else{
+        firebase.database().ref('StudentsData/'+LoggedId).on('value', function(snapshot){
+                FullName = snapshot.val().name;
+                data.push(snapshot.val().name);
+                data.push(snapshot.val().uid);
+                data.push(snapshot.val().dob);
+                data.push(snapshot.val().email);
+                data.push(snapshot.val().mobile);
+                data.push(snapshot.val().img);
+                globalData = data;
+                document.getElementById("LoggedUser").innerHTML = `<i class="fas fa-user"></i> `+ FullName;
+        });   
+    }
+}
+
+function getLeaves(){
+    document.getElementById("student").querySelector(".heading").innerHTML = "Student Leave Apply";
+    var formLeave = document.getElementById("form-leave");
+    formLeave.style.visibility = "collapse";
+    formLeave.style.display = "none";
+
+    var leaveHistory = document.getElementById("leave-history");
+    leaveHistory.style.visibility = "visible";
+    leaveHistory.style.display = "block";
+
+    var backBtn = document.getElementById("back-btn");
+    backBtn.style.visibility = "visible";
+    backBtn.style.display = "block";
+
+    var ele = document.getElementById("profile-container");
+    ele.style.visibility = "collapse";
+    ele.style.display = "none";
+
+    var data;
+    var type, startDate, endDate, reason, status;
+    firebase.database().ref('Leaves/'+LoggedId).on('value', function(snapshot){
+        console.log(snapshot.val());
+        var val = snapshot.val();
+        console.log(val);
+        if(val!=undefined && val!=null){
+            console.log(val!=undefined && val!=null);
+            data = Object.values(snapshot.val());
+        }
+        else{
+            data = "undefined";
+        }
+    });
+    
+    document.getElementById("leave-history").innerHTML = "";
+    document.getElementById("leave-history").innerHTML = `<h2 class="leave-head" id = "leave-head">Leave History</h2>`;
+    setTimeout(function(){
+        console.log("Ensuring that the code runs after data is retreived");
+        console.log(data);
+        if(data === "undefined"){
+            document.getElementById("leave-head").insertAdjacentHTML("afterend", `<div class="no-leave">
+                <p><i class="fas fa-info-circle"></i> No leaves applied</p>
+            </div>`);
+        }
+        else{
+            for(key in data){
+                type = data[key].Leavetype;
+                startDate = data[key].startDate;
+                endDate = data[key].endDate;
+                reason = data[key].reason;
+                status = data[key].status;
+                console.log(type, startDate, endDate, reason);
+        
+                var color;
+                if(status === "rejected"){
+                    color = "#DC2626";
+                }
+                else if(status === "pending"){
+                    color = "#EA580C";
+                }
+                else{
+                    color = "#16A34A";
+                }
+        
+                document.getElementById("leave-head").insertAdjacentHTML("afterend", `<div class="leave-item">
+                <span class="status" style = "color:${color}"><i class="far fa-check-circle tick"></i> ${status}</span>
+                <h3 id = "leave-type">${type} Leave</h3>
+                <small class="date" id = "date">${startDate} to ${endDate}</small>
+                <p class="reason" id = "reason"><span>Reason - </span> ${reason}</p>
+                </div>`);
+            }
+        }
+        
+    }
+    , 1000);
+    
+    
+}
+
+function back(){
+    document.getElementById("student").querySelector(".heading").innerHTML = "Student Leave Apply";
+    var formLeave = document.getElementById("form-leave");
+    formLeave.style.visibility = "visible";
+    formLeave.style.display = "block";
+
+    var leaveHistory = document.getElementById("leave-history");
+    leaveHistory.style.visibility = "collapse";
+    leaveHistory.style.display = "none";
+
+    var backBtn = document.getElementById("back-btn");
+    backBtn.style.visibility = "collapse";
+    backBtn.style.display = "none";
+
+    var ele = document.getElementById("profile-container");
+    ele.style.visibility = "collapse";
+    ele.style.display = "none";
+
+    ele = document.getElementById("history-btn");
+    ele.style.visibility = "visible";
+    ele.style.display = "block";
+}
+
+function applyLeave(){
+    var date = new Date();
+    var key = date.getDate()+"-"+String((date.getMonth())+1)+"-"+date.getFullYear()+"_"+date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds();
+    console.log(key);
+    var type = document.getElementById("leaveType");
+    var startDate = document.getElementById("start-date");
+    var endDate = document.getElementById("end-date");
+    var reason = document.getElementById("leave-reason");
+    
+    firebase.database().ref('Leaves/'+LoggedId+"/"+key).set({
+        Leavetype : type.value,
+        startDate : startDate.value,
+        endDate : endDate.value,
+        reason : reason.value,
+        status : "pending" 
+    });
+
+    alert("Leave applied successfully");
+
+    type.value = "";
+    startDate.value = "";
+    endDate.value = "";
+    reason.value = "";
+}
+
+function dropdown(){
+    var ele = document.getElementById("dropoptions");
+    ele.classList.toggle("hide");
+
+    if( ele.classList[1] == "hide"){
+        ele.style.visibility = "collapse";
+        ele.style.display = "none";
+        
+    }
+    else{
+        ele.style.visibility = "visible";
+        ele.style.display = "block";
+    }
+    
+}
+
+
+function profile(){
+    document.getElementById("student").querySelector(".heading").innerHTML = "My Profile";
+    var ele = document.getElementById("leave-history");
+    ele.style.visibility = "collapse";
+    ele.style.display = "none";
+    var ele = document.getElementById("form-leave");
+    ele.style.visibility = "collapse";
+    ele.style.display = "none";
+    var ele = document.getElementById("profile-container");
+    ele.style.visibility = "visible";
+    ele.style.display = "grid";
+    var ele = document.getElementById("back-btn");
+    ele.innerHTML = `<i class="fas fa-arrow-left"></i> Leave Apply`;
+    ele.style.visibility = "visible";
+    ele.style.display = "block";
+    ele = document.getElementById("history-btn");
+    ele.style.visibility = "collapse";
+    ele.style.display = "none";
+    
+    console.log(globalData);
+    document.getElementById("uid-head").innerHTML = `UID : ${globalData[1]} <div class="profile-img" id="input-img"><img src="" alt="" srcset="" id= "img"></div>`;
+    document.getElementById("input-name").innerText = globalData[0];
+    document.getElementById("input-uid").innerText = globalData[1];
+    document.getElementById("input-dob").innerText = globalData[2];
+    document.getElementById("input-email").innerText = globalData[3];
+    document.getElementById("input-contact").innerText = globalData[4];
+    document.getElementById("input-img").querySelector("img").src = globalData[5];
+}
+
+function logout(){
+    localStorage.setItem(globalData[1], new Date().getSeconds());
+    window.location.href = "https://leave-management-sys.netlify.app/";
 }

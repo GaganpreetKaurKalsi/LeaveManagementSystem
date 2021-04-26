@@ -10,6 +10,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-storage.js"></script>
     
     <script src="https://kit.fontawesome.com/d733855d1a.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
@@ -41,14 +42,22 @@
             </li>
             <li class="title"><span>L</span>eave <span>M</span>anagement <span>S</span>ystem</li>
             <li class="user" id = "LoggedUser"><i class="fas fa-user"></i></li>
+            <li class="user dropdown" id = "dropit"><i class="fas fa-sort-down" id = "dropicon"></i></li>
         </ul>
     </header>
 
+    <div class="profile hide" id = "dropoptions">
+        <ul>
+            <div class="tab prof" onclick="profile()"><li><i class="fas fa-user icon"></i> Profile</li></div>
+            <div class="tab id"><li><i class="fas fa-id-badge icon"></i> 19BCS6047</li></div>
+            <div class="tab logout" onclick="logout()"><li><i class="fas fa-sign-out-alt icon"></i> LOG OUT</li></div>
+        </ul>
+    </div>
     <div class="student" id = "student">
         <div class="heading">Student Leave Apply</div>
-        <button class="btn button history-btn" onclick="getLeaves()"><i class="fas fa-history"></i>  Leave History</button>
+        <button class="btn button history-btn" onclick="getLeaves()" id = "history-btn"><i class="fas fa-history"></i>  Leave History</button>
         <button class="btn button back-btn" onclick="back()" id = "back-btn"><i class="fas fa-arrow-left"></i> Back</button>
-        <div class="form-leave form" id = "form-leave">
+        <div class="form-leave form" id = "form-leave" >
             <div class="element element-leave">
                 <label for="type">Leave Applied for </label>
                 <select name="leaveType" id="leaveType">
@@ -77,8 +86,25 @@
             <button class="btn leave-btn" onclick = "applyLeave()">Submit</button>
     
         </div>
-        <div class="leave-history" id = "leave-history">
+        <div class="leave-history" id = "leave-history" >
             
+        </div>
+
+        <div class="profile-container grid-container" id = "profile-container">
+            
+            <h4 class="grid-item head head1">Student Profile</h4>
+            <h2 class="grid-item head head2" id = "uid-head"></h2>
+            <h3 class="grid-item head align-left head3"><u>Student Personal Information</u></h3>
+            <p class="name grid-item info">Full name</p>
+            <p class="name-info grid-item info" id="input-name"></p>
+            <p class="uid grid-item info">UID</p>
+            <p class="uid-info grid-item info" id="input-uid"></p>
+            <p class="dob grid-item info">Date of Birth</p>
+            <p class="dob-info grid-item info" id="input-dob"></p>
+            <p class="email grid-item info">Email</p>
+            <p class="email-info grid-item info" id="input-email"></p>
+            <p class="contact grid-item info">Contact no.</p>
+            <p class="contact-info grid-item info" id="input-contact"></p>
         </div>
     </div>
     

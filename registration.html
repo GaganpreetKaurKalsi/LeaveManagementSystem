@@ -10,6 +10,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-storage.js"></script>
     
 </head>
 <body class="registration-body">
@@ -23,38 +24,43 @@
                 <!-- <hr> -->
                 
                 <div class="element ele">
-                    <label for="name"><i class="fas fa-user icon"></i> Full Name</label>
+                    <label for="name"><i class="fas fa-user icon"></i> Full Name<span style = "color : rgb(218, 0, 0);">*</span></label>
                     <input type="text" name = "name" placeholder="Your Name" required id = "name">
                 </div>
         
                 <div class="element ele">
-                    <label for="uid"><i class="fas fa-id-badge icon"></i> UID</label>
+                    <label for="uid"><i class="fas fa-id-badge icon"></i> UID<span style = "color : rgb(218, 0, 0);">*</span></label>
                     <input type="text" name = "uid" placeholder="Your UID" required id = "uid">
                 </div>
 
                 <div class="element ele">
-                    <label for="dob"><i class="far fa-calendar-alt icon"></i> DOB</label>
+                    <label for="dob"><i class="far fa-calendar-alt icon"></i> DOB<span style = "color : rgb(218, 0, 0);">*</span></label>
                     <input type="date" name = "dob" placeholder="Your Date of Birth" required id = "dob">
                 </div>
         
                 <div class="element ele">
-                    <label for="email"><i class="fas fa-envelope icon"></i> Email ID</label>
+                    <label for="email"><i class="fas fa-envelope icon"></i> Email ID<span style = "color : rgb(218, 0, 0);">*</span></label>
                     <input type="email" name = "email" placeholder="Your email id" required id = "email">
                 </div>
         
                 <div class="element ele">
-                    <label for="mobile"><i class="fas fa-phone-square-alt icon"></i> Mobile No.</label>
-                    <input type="tel" name="mobile" placeholder="Your mobile no." required id = "mobile">
+                    <label for="mobile"><i class="fas fa-phone-square-alt icon"></i> Mobile No.<span style = "color : rgb(218, 0, 0);">*</span></label>
+                    <input type="tel" name="mobile" placeholder="Your mobile no." required id = "mobile" pattern="[0-9]{10}" title = "mobile no. should be of 10 digits">
                 </div>
         
                 <div class="element ele">
-                    <label for="pwd"><i class="fas fa-lock icon"></i> Password</label>
+                    <label for="pwd"><i class="fas fa-lock icon"></i> Password<span style = "color : rgb(218, 0, 0);">*</span></label>
                     <input type="password" name="pwd" id="pwd" placeholder="Your Password" required id = "pwd">
                 </div>
         
                 <div class="element ele">
-                    <label for="confirm-pwd"><i class="fas fa-lock icon"></i> Confirm Password</label>
+                    <label for="confirm-pwd"><i class="fas fa-lock icon"></i> Confirm Password<span style = "color : rgb(218, 0, 0);">*</span></label>
                     <input type="password" name="confirm-pwd" id="confirm-pwd" placeholder="Confirm password" required>
+                </div>
+
+                <div class="element ele">
+                    <label for="img"><i class="fas fa-image icon"></i> Upload image<span style = "color : rgb(218, 0, 0);">*</span></label>
+                    <input type="file" id="uploadimg" name="img" accept=".jpg,.jpeg" style="padding-left : 0;" required>
                 </div>
         
                 <button class="btn btn-register" type="submit">Submit</button>

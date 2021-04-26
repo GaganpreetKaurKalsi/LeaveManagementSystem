@@ -175,10 +175,18 @@ ul li{
 .user{
     float : right;
     top : 44px;
-    right : 20px;
+    right : 50px;
     font-family: 'Merriweather', serif;
     font-weight : bolder;
     color : rgb(104, 104, 104);
+    font-size: 15px;
+}
+.dropdown{
+    right: 10px;
+    position: absolute;
+    width: 25px;
+    text-align: center;
+    cursor: pointer;
 }
 
 .title{
@@ -580,6 +588,91 @@ button:focus{
     display : block;
     font-weight : bold;
     margin-bottom : 20px;
+}
+
+.profile{
+    width : 150px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: white;
+    float : right;
+    right : 20px;
+    top : 80px;
+    position: absolute;
+    display : none;
+    visibility: collapse;
+    z-index : 2;
+}
+.profile ul{
+    list-style: none;
+}
+.profile ul .tab{
+    font-size : 13px;
+    padding : 7px 10px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+.profile .prof, .profile .id{
+    border-bottom:0.5px solid rgb(194, 194, 194);
+}
+.profile .prof:hover, .profile .id:hover{
+    cursor : pointer;
+    background-color : #FACC15;
+}
+.profile .logout{
+    background-color: rgb(238, 0, 0);
+    color : white;
+    cursor: pointer;
+}
+.profile .logout .icon{
+    color : white;
+}
+#img{
+    height : 100px;
+    width : 100px;
+    float : right;
+}
+.grid-container{
+    display: grid;
+    max-width : 800px;
+    margin : auto;
+    width : 90%;
+    margin-top : 50px; 
+    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+    clear: both;
+    margin-bottom : 50px;
+}
+.profile-container{
+    font-family: 'Noto Sans JP', sans-serif;
+    display: none;
+    visibility: collapse;
+}
+.grid-container > .head{
+    grid-column: 1 / 3;
+    color : black;
+    font-weight : 300;
+    text-align: center;
+    margin-bottom : 20px;   
+}
+.grid-container .grid-item{
+    margin-bottom : 20px;
+}
+.grid-container .align-left{
+    text-align : left;
+    margin-bottom : 40px;
+}
+.profile-container .head1{
+    font-size : 18px;
+}
+.profile-container .head2{
+    font-size : 22px;
+    color : #DC2626;
+}
+.profile-container .head3{
+    font-size : 16px;
+    font-weight : bold;
+}
+.profile-container .info{
+    font-size : 16px;
 }
 
 @media only screen and (max-width: 950px){
