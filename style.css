@@ -834,10 +834,8 @@ th, td{
     }
     .container-register{
         margin : 0;
-        width : 98%;
         box-shadow: unset;
-        margin: auto;
-        margin-top: 5px;
+        width:100%;
     }
     .center{
         text-align: center;
