@@ -49,7 +49,7 @@ function submitStudentData(event){
     var confirm_pwd = document.getElementById("confirm-pwd");
 
     var img = document.getElementById("uploadimg").files[0];
-    var uploadTask = firebase.storage().ref('Images/'+img.name).put(img);
+    
 
     if(password.value !== confirm_pwd.value){
         alert("Passwords did not match. Please try again!");
@@ -61,9 +61,9 @@ function submitStudentData(event){
         });
 
         setTimeout(function(){
-            
-            if(uid_db === undefined){
-                
+            console.log(uid_db)
+            if(uid_db === undefined || uid_db === null){
+                var uploadTask = firebase.storage().ref('Images/'+img.name).put(img);
                 uploadTask.on('state_changed', function(snapshot){
                     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 },
@@ -96,7 +96,7 @@ function submitStudentData(event){
                 document.getElementById("uploadimg").value = "";
             }
             
-        },2000);
+        },4000);
         
     }
 }
@@ -175,7 +175,7 @@ function studentLogin(){
         if(userId.value.toUpperCase() === uid && pwd.value === password){
             LoggedId = uid;
             const now = new Date()
-            localStorage.setItem(LoggedId, now.getTime() + 6000000)
+            localStorage.setItem(LoggedId, now.getTime() + 900000)
             window.location.href = "/mainPage.html" + "?uid="+LoggedId;
         }
         else{
