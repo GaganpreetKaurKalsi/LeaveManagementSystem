@@ -848,5 +848,10 @@ th, td{
     .profile-img{
         margin-top : 20px;
     }
+    th, td {
+        padding: 0px;
+        font-size: 14px;
+        border: 1px solid rgb(221, 221, 221);
+    }
 }
 
