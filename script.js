@@ -511,6 +511,9 @@ function user(){
         var ele = document.getElementById("profile-tab");
         ele.style.visibility = "collapse";
         ele.style.display = "none";
+        var ele = document.getElementById("all-leaves-tab");
+        ele.style.visibility = "visible";
+        ele.style.display = "block";
         adminApprove();
     }
     else{
@@ -667,8 +670,10 @@ function dropdown(){
         ele.style.visibility = "visible";
         ele.style.display = "block";
     }
-
-    document.getElementById("id_li").innerHTML = `<i class="fas fa-id-badge icon"></i> ${globalData[1]}`;
+    if(globalData !== undefined && globalData !== null){
+        document.getElementById("id_li").innerHTML = `<i class="fas fa-id-badge icon"></i> ${globalData[1]}`;
+    }
+    
 }
 
 
@@ -736,4 +741,91 @@ function profile(){
 function logout(){
     localStorage.setItem(globalData[1], new Date().getSeconds());
     window.location.href = "https://leave-management-sys.netlify.app/";
+}
+
+
+var fetch_done = false
+function showAllLeaves(){
+    var ele = document.getElementById("all-leaves-container");
+    ele.style.visibility = "visible";
+    ele.style.display = "block";
+    
+    document.getElementById("leave-approval").innerText = "Leaves Database";
+    
+    ele = document.getElementById("leave-container");
+    ele.style.visibility = "collapse";
+    ele.style.display = "none";
+
+    ele = document.getElementById("backtomain-btn");
+    ele.style.visibility = "visible";
+    ele.style.display = "block";
+
+    if(!fetch_done){
+        firebase.database().ref('Leaves').on('value', function(snapshot){
+            var val = snapshot.val();
+            var uids = Object.keys(val);
+            
+            if(val!=undefined && val!=null){
+                var count = 0;
+                var color = "#F4F4F5";
+                var status_color;
+                for(i in uids){
+                    for(j in val[uids[i]]){
+                        if(count%2==0){
+                            color = "white";
+                        }
+                        else{
+                            color = "#F4F4F5";
+                        }
+                        var data = [];
+                        var leaves = val[uids[i]][j];
+                        data.push(uids[i]); //UID
+                        data.push(leaves.Leavetype);
+                        data.push(leaves.startDate);
+                        data.push(leaves.endDate);
+                        data.push(leaves.reason);
+                        data.push(leaves.status);
+                        if(leaves.status === "pending"){
+                            status_color = "#F59E0B"; 
+                        }
+                        else if(leaves.status === "Approved"){
+                            status_color = "#16A34A"; 
+                        }
+                        else{
+                            status_color = "#DC2626"; 
+                        }
+                        document.getElementById("table-headings").insertAdjacentHTML("afterend",
+                            `<tr>
+                            <td class="data uid" style = "background-color : ${color}">${data[0]}</td>
+                            <td class="data leave-type" style = "background-color : ${color}">${data[1]}</td>
+                            <td class="data start-date" style = "background-color : ${color}">${data[2]}</td>
+                            <td class="data end-date" style = "background-color : ${color}">${data[3]}</td>
+                            <td class="data reason" style = "background-color : ${color}">${data[4]}</td>
+                            <td class="data status-table" style = "background-color : ${color}; color : ${status_color}">${data[5]}</td>
+                        </tr>`
+                        );
+                        count++;
+                    }
+    
+                }
+                fetch_done = true;
+            }
+            else{
+                data = "undefined";
+            }
+        });
+    }
+}
+
+function backtomain(){
+    var ele = document.getElementById("all-leaves-container");
+    ele.style.visibility = "collapse";
+    ele.style.display = "none";
+
+    ele = document.getElementById("leave-container");
+    ele.style.visibility = "visible";
+    ele.style.display = "block";
+
+    document.getElementById("leave-approval").innerText = "Pending leaves for Approval";
+    // adminApprove();
 }

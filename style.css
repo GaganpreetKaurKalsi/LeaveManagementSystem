@@ -678,7 +678,55 @@ button:focus{
 .profile-container .info{
     font-size : 16px;
 }
+.leaves-data{
+    visibility : collapse;
+    display: none;
+}
+.table{
+    width: 90%;
+    max-width : 1000px;
+    margin : auto;
+    text-align : left;
 
+}
+.table-headings th{
+    margin-bottom : 20px;
+}
+th, td{
+    padding : 15px;
+    font-size : 14px; 
+    border: 1px solid #ddd;
+}
+.all-leaves-container{
+    display : none;
+    visibility: collapse;
+    margin-top : 20px;
+    margin-bottom : 50px;
+   
+}
+.all-leaves-container table{
+    border-collapse: collapse;
+    /* font-family: Arial, Helvetica, sans-serif; */
+    font-family: 'Noto Sans JP', sans-serif;
+    clear:both;
+}
+
+#dropoptions .tab{
+    cursor: pointer;
+}
+.all-leaves-container .head{
+    background-color : #fb923c;
+    color : black;
+    font-weight : 300;
+    font-size : 16px;
+}
+.all-leaves-container .data{
+    background-color: #F4F4F5;
+}
+#backtomain-btn{
+    position: relative;
+    top: -20px;
+}
 @media only screen and (max-width: 950px){
     .element-leave{
         width : 100%;

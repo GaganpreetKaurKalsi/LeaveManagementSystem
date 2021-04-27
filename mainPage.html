@@ -50,6 +50,7 @@
         <ul>
             <div class="tab prof" id = "profile-tab" onclick="profile()"><li><i class="fas fa-user icon"></i> Profile</li></div>
             <div class="tab id" id = "id-tab"><li id = "id_li"></li></div>
+            <div class="tab leaves-data" id = "all-leaves-tab" onclick = "showAllLeaves()"><li id = "all-leaves"><i class="fas fa-database icon"></i> Database</li></div>
             <div class="tab logout" onclick="logout()"><li><i class="fas fa-sign-out-alt icon"></i> LOG OUT</li></div>
         </ul>
     </div>
@@ -123,17 +124,23 @@
         <div class="heading" id = "leave-approval">Pending leaves for Approval</div>
         <div id = "leave-container">
             <h2 class="leave-head" id = "container-head">Leaves</h2>
-            <!-- <div class="leave-item">
-                <h2 class="uid">19BCS6047</h2>
-                <h3 class="name">Gaganpreet Kaur Kalsi</h3>
-                <h4 id = "leave-type">General Leave</h4>
-                <small class="date" id = "date">28-03-2021 to 30-03-2021</small>
-                <p class="reason" id = "reason"><span>Reason - </span> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam commodi excepturi quas! Corrupti ad accusamus aliquid officia, numquam dolore explicabo, reiciendis sequi sapiente culpa commodi illo consectetur. Aliquam, error distinctio.</p>
-                <button class="btn button approve" id = "approve-btn" onclick="approve()">Approve</button>
-            </div> -->
         </div>
     </div>
 
+    <div class="all-leaves-container" id = "all-leaves-container">
+        <button class="btn button back-btn" onclick="backtomain()" id = "backtomain-btn"><i class="fas fa-arrow-left"></i> Main Page</button>
+        <table class="table">
+            <tr class="table-headings" id = "table-headings">
+                <th class="head">UID</th>
+                <th class="head">Leave Type</th>
+                <th class="head">Start Date</th>
+                <th class="head">End Date</th>
+                <th class="head">Reason</th>
+                <th class="head">Status</th>
+            </tr>
+            
+        </table>
+    </div>
 
     <footer class="footer">
         <p>Group Project | Topic - Smart Attendance Management System | Frontend for leave management</p>
