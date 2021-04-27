@@ -282,13 +282,13 @@ function adminApprove(){
                     status = data[uid][key].status;
                     // console.log(type, startDate, endDate, reason);
                     var color;
-                    if(status === "pending"){
+                    if(status === "Pending"){
                         color = "#DC2626";
                     }
                     else{
                         color = "#16A34A";
                     }
-                    if(status === "pending"){
+                    if(status === "Pending"){
                         document.getElementById("container-head").insertAdjacentHTML("afterend", `<div class="leave-item" id="${uid}${date_time}">
                         <h2 class="uid">${uid}</h2>
                         <h3 class="name">${uid_name[uid]}</h3>
@@ -584,10 +584,10 @@ function getLeaves(){
                 console.log(type, startDate, endDate, reason);
         
                 var color;
-                if(status === "rejected"){
+                if(status === "Rejected"){
                     color = "#DC2626";
                 }
-                else if(status === "pending"){
+                else if(status === "Pending"){
                     color = "#EA580C";
                 }
                 else{
@@ -646,7 +646,7 @@ function applyLeave(){
         startDate : startDate.value,
         endDate : endDate.value,
         reason : reason.value,
-        status : "pending" 
+        status : "Pending" 
     });
 
     alert("Leave applied successfully");
@@ -718,7 +718,7 @@ function profile(){
                 if(data[i].status === "Approved"){
                     count_approved+=1;
                 }
-                else if(data[i].status === "pending"){
+                else if(data[i].status === "Pending"){
                     count_pending+=1;
                 }
                 else{
@@ -739,7 +739,13 @@ function profile(){
 }
 
 function logout(){
-    localStorage.setItem(globalData[1], new Date().getSeconds());
+    if(globalData === undefined || globalData === null){
+        localStorage.setItem('admin', new Date().getSeconds());
+    }
+    else{
+        localStorage.setItem(globalData[1], new Date().getSeconds());
+    }
+    
     window.location.href = "https://leave-management-sys.netlify.app/";
 }
 
@@ -785,7 +791,7 @@ function showAllLeaves(){
                         data.push(leaves.endDate);
                         data.push(leaves.reason);
                         data.push(leaves.status);
-                        if(leaves.status === "pending"){
+                        if(leaves.status === "Pending"){
                             status_color = "#F59E0B"; 
                         }
                         else if(leaves.status === "Approved"){
