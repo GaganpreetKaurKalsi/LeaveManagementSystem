@@ -394,7 +394,7 @@ function sendOTP(){
                     To: email,
                     From: "webdevelopermail06@gmail.com",
                     Subject: "Password reset request for LMS",
-                    Body: `OTP for Password Recovery of your CUIMS is ${OTP} and is valid for next 15 mins.`,
+                    Body: `OTP for Password Recovery of your LMS is ${OTP} and is valid for next 15 mins.`,
                 })
                     .then(function (message) {
                     alert("Verification mail sent successfully!")
