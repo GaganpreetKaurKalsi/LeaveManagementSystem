@@ -11,6 +11,10 @@
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
+
+// Funtion handling the functionality of dropdown menu
+// When dropdown arrow is clicked, the menu appears
+// When either dropdown arrow is clicked again or the user clicks on somewhere other than the menu, the menu disappears  
 window.addEventListener('load',function(){
     document.addEventListener('click', (evt)=>{
         var e1 = document.getElementById("dropit");
@@ -30,16 +34,28 @@ window.addEventListener('load',function(){
     });
 });
 
+
+// Code segments for registration page
+// Handling the height of the LHS image and container based on the RHS form.
 var element = document.querySelector(".right");
 document.querySelector(".left").style.height = getComputedStyle(element).height;
 document.querySelector(".container-register").style.height = getComputedStyle(element).height;
 console.log(getComputedStyle(element).height);
 
 
+/* ***************************************************************
 
-// Script running on registration.html
+BELOW ARE THE SCRIPTS RUNNING ON registration.html
+link - "https://leave-management-sys.netlify.app/registration.html"
+
+*************************************************************** */
+
+
+// Invoked when the registration form is submitted
 function submitStudentData(event){
     event.preventDefault();
+
+    // Collecting data from fields
     var name = document.getElementById("name");
     var uid = document.getElementById("uid");
     var dob = document.getElementById("dob");
@@ -47,22 +63,28 @@ function submitStudentData(event){
     var mobile = document.getElementById("mobile");
     var password = document.getElementById("pwd");
     var confirm_pwd = document.getElementById("confirm-pwd");
-
     var img = document.getElementById("uploadimg").files[0];
     
-
+    // Checking if the passwords are same 
     if(password.value !== confirm_pwd.value){
         alert("Passwords did not match. Please try again!");
     }
     else{
         var uid_db;
+        // Fetching data of the user with entered UID from the DB if any
+        // If the data is not fetched that means the user is not registered previously. The registration process will continue
+        // If the data is fetched successfully means the user is registered already and therefore the registration process will terminate.
         firebase.database().ref('StudentsData/'+uid.value.toUpperCase()).on('value', function(snapshot){
             uid_db = snapshot.val().uid; 
         });
-
+        // Setting Timeout function to wait for sometime for data to be successfully fetched from the DB.
         setTimeout(function(){
             console.log(uid_db)
+
+            // Checking for any value in uid_db 
             if(uid_db === undefined || uid_db === null){
+
+                // Uploading data in DB
                 var uploadTask = firebase.storage().ref('Images/'+img.name).put(img);
                 uploadTask.on('state_changed', function(snapshot){
                     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -90,6 +112,9 @@ function submitStudentData(event){
                 });   
                 
             }
+            // If data is found in uid_db -> means student is already registered 
+            // Don't upload data in DB
+            // clear the fields
             else{
                 alert("Student registered already!");
                 clearFields(name, email, mobile, password, confirm_pwd, uid, dob);
@@ -101,6 +126,7 @@ function submitStudentData(event){
     }
 }
 
+// Function to clear fields
 function clearFields(name, email, mobile, password, confirm_pwd, uid, dob){
     name.value = "";
     email.value = "";
@@ -113,10 +139,17 @@ function clearFields(name, email, mobile, password, confirm_pwd, uid, dob){
 
 
 
+/* **********************************************
 
-// Scripts running on index.html
+SCRIPTS RUNNING ON index.html
+link - https://leave-management-sys.netlify.app/
+
+************************************************* */
 
 var user = 0
+
+// Function handling the login page for admin
+// collapsing student fields and making admin fields visible
 function admin(){
     user = 1;
     var element = document.getElementById("admin-fields");
@@ -135,6 +168,10 @@ function admin(){
     element.style.visibility = "collapse";
     element.style.display = "none";
 }
+
+// Function handling the login page for student
+// collapsing admin fields and making student fields visible
+// default function when the page loads
 function student(){
     user = 0;
     var element = document.getElementById("student-fields");
@@ -157,12 +194,17 @@ function student(){
 var LoggedId;
 var FullName;
 
+// Funtion for student login
+// Authenticating the user by matching the password with the one in DB
+// If the credentials are correct then redirecting to mainPage of LMS
+// Invoked when submit button of Student Login page is clicked
 function studentLogin(){
     var userId = document.getElementById("username");
     var pwd = document.getElementById("password");
     var uid;
     var password;
 
+    // Fetching credentials from DB
     firebase.database().ref('StudentsData/'+userId.value.toUpperCase()).on('value', function(snapshot){
         uid = snapshot.val().uid;
         password = snapshot.val().password; 
@@ -175,6 +217,9 @@ function studentLogin(){
         if(userId.value.toUpperCase() === uid && pwd.value === password){
             LoggedId = uid;
             const now = new Date()
+
+            // Setting a SESSION TIME of 15mins for the USER
+            // After the time is over the user will be automatically logged out and will need to login again
             localStorage.setItem(LoggedId, now.getTime() + 900000)
             window.location.href = "/mainPage.html" + "?uid="+LoggedId;
         }
@@ -185,6 +230,10 @@ function studentLogin(){
     
 }
 
+// Funtion for admin login
+// Authenticating the user by matching the password with the one in DB
+// If the credentials are correct then redirecting to mainPage of LMS
+// Invoked when submit button of Student Login page is clicked
 function adminLogin(){
     var userId = document.getElementById("adminId");
     var pwd = document.getElementById("pwd");
@@ -215,6 +264,8 @@ function adminLogin(){
 //     } while (currentDate - date < milliseconds);
 // }
 
+
+// Function to load the main page of admin account
 function adminApprove(){
     var student = document.getElementById("student");
     student.style.visibility = "collapse";
@@ -308,6 +359,7 @@ function adminApprove(){
     }, 3000);
 }
 
+// Function invoked when admin clicks on the approve button
 function approve(uid, date_time){
     firebase.database().ref('Leaves/'+uid+'/'+date_time).update({
         status : "Approved"
@@ -322,6 +374,7 @@ function approve(uid, date_time){
     document.getElementById(uid+date_time).querySelector("#reject-btn").style.cursor = "auto";
 }
 
+// Function invoked when admin clicks on the approve button
 function reject(uid, date_time){
     firebase.database().ref('Leaves/'+uid+'/'+date_time).update({
         status : "Rejected"
@@ -335,7 +388,8 @@ function reject(uid, date_time){
     document.getElementById(uid+date_time).querySelector("#reject-btn").style.cursor = "auto";
 }
 
-
+// Handling forgot password pops
+// invoked when forgot password link is clicked
 function forgotPwdPopUp(){
     var ele1 = document.querySelector(".coverage");
     var ele2 = document.querySelector(".forgot-container");
@@ -349,6 +403,7 @@ function forgotPwdPopUp(){
     document.querySelector(".verify").querySelector("#DOB").value = "";
 }
 
+// Invoked when close icon on the top right side is clicked
 function closeForgotPwdPopUp(){
     var ele1 = document.querySelector(".coverage");
     var ele2 = document.querySelector(".forgot-container");
@@ -363,6 +418,8 @@ function closeForgotPwdPopUp(){
 var OTP;
 var uid;
 
+
+// Function to send OTP to the registered email of user
 function sendOTP(){
 
     uid = document.getElementById("UID").value;
@@ -413,6 +470,7 @@ function sendOTP(){
     },4000); 
 }
 
+// Function to confirm the OTP -> If the OTP entered by the user is correct or not 
 function confirmOTP(){
     
     if(document.getElementById("UserOTP").value === OTP){
@@ -432,6 +490,7 @@ function confirmOTP(){
     };
 }
 
+// Function to show the reset password page
 function resetPwd(){
     var newpwd = document.getElementById("newpwd");
     var confirmpwd = document.getElementById("confirmpwd");
@@ -447,10 +506,10 @@ function resetPwd(){
         alert("Password reset successful");
         window.location.href = "https://leave-management-sys.netlify.app/";
         collapse_forgotpwd();
-        
     }
 }
 
+// Function to collapse the forgot password page
 function collapse_forgotpwd(){
     var ele = document.querySelector(".confirmOTP");
     ele.style.visibility = "collapse";
@@ -461,17 +520,20 @@ function collapse_forgotpwd(){
     ele = document.querySelector(".verify");
     ele.style.visibility = "visible";
     ele.style.display = "block";
+    clearInterval(timer)
 }
 
+var timer = null
+// Function to set timer of 15mins on the OTP confirmation page 
 function set_timer_15(){
     var min = 15;
-    var sec = 00;
+    var sec = 0;
 
     var timeStr = min + ":0" + sec;
 
     document.getElementById("timer").innerText = "Remaining Time - " + timeStr;
     console.log(timeStr);
-    setInterval(function tick(){
+    timer = setInterval(function tick(){
         if(sec>0){
             sec = sec - 1;
         }
@@ -479,23 +541,42 @@ function set_timer_15(){
             sec = 59;
             min = min - 1;
         }
+        if(min===0 && sec===0){
+            OTP = null
+            timeStr = "00:00"
+            document.getElementById("timer").innerText = "Remaining Time - " + timeStr;
+            clearInterval(timer)
+            alert("Time's UP")
+            window.location.href = "https://leave-management-sys.netlify.app/";
+        }
         if(!(sec<10) && !(min<10)){
             timeStr = min + ":" + sec;
         }
-        if(sec<10){
-            timeStr = min + ":0" +sec;
+        if(sec<10 && !(min<10)){
+            timeStr = min + ":0"+sec.toString();
         }
-        if(min<10){
-            timeStr = "0" + min + ":" +sec;
+        if(min<10 && !(sec<10)){
+            timeStr = "0"+min.toString() + ":" +sec;
+        }
+        if(min<10 && sec<10){
+            timeStr = "0"+min.toString() + ":0"+sec.toString();
         }
         document.getElementById("timer").innerText = "Remaining Time - " + timeStr;
     },1000)
 }
 
 
+
 var globalData;
 
-// Script running on mainPage.html
+/* ****************************
+
+SCRIPT RUNNING ON mainPage.html
+
+***************************** */
+
+// Function which runs when the main page of the user is loaded
+// Takes data from the url and checks if the admin is logged in or user and based on that shows the data relevant to the same
 function user(){
     var queryString = decodeURIComponent(window.location.search);
     queryString = queryString.substring(1);
@@ -531,6 +612,8 @@ function user(){
     }
 }
 
+// Function invoked when history button is clicked
+// Used to fetch the leaves applied by the user and show it on the page
 function getLeaves(){
     document.getElementById("student").querySelector(".heading").innerHTML = "Student Leave Apply";
     var formLeave = document.getElementById("form-leave");
@@ -609,6 +692,8 @@ function getLeaves(){
     
 }
 
+// Function invoked when Back button is clicked 
+// Used to load the main page of the user when back button on the page displaying all leaves is clicked
 function back(){
     document.getElementById("student").querySelector(".heading").innerHTML = "Student Leave Apply";
     var formLeave = document.getElementById("form-leave");
@@ -632,6 +717,8 @@ function back(){
     ele.style.display = "block";
 }
 
+// Function invoked when Leave is applied
+// This function takes the information and stores it in the DB
 function applyLeave(){
     var date = new Date();
     var key = date.getDate()+"-"+String((date.getMonth())+1)+"-"+date.getFullYear()+"_"+date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds();
@@ -657,6 +744,7 @@ function applyLeave(){
     reason.value = "";
 }
 
+// Function for handling the visibility of dropdown button
 function dropdown(){
     var ele = document.getElementById("dropoptions");
     ele.classList.toggle("hide");
@@ -676,7 +764,8 @@ function dropdown(){
     
 }
 
-
+// Function for the profile page
+// 
 function profile(){
     document.getElementById("student").querySelector(".heading").innerHTML = "My Profile";
     var ele = document.getElementById("leave-history");
@@ -738,6 +827,9 @@ function profile(){
     });
 }
 
+// Function invoked when LOGOUT button is clicked
+// Ends the session so that the user may not be able to press the back button and return to the page after logging out
+// Logs out the USER
 function logout(){
     if(globalData === undefined || globalData === null){
         localStorage.setItem('admin', new Date().getSeconds());
@@ -751,6 +843,8 @@ function logout(){
 
 
 var fetch_done = false
+
+// Function to create the table of leaves for admin
 function showAllLeaves(){
     var ele = document.getElementById("all-leaves-container");
     ele.style.visibility = "visible";
@@ -823,6 +917,7 @@ function showAllLeaves(){
     }
 }
 
+// Function to return to the admin main page
 function backtomain(){
     var ele = document.getElementById("all-leaves-container");
     ele.style.visibility = "collapse";
